@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->integer('total_price');
-            $table->enum('status',['disable','enable']);
+            $table->enum('status',['disable','enable'])->default('enable');
             $table->foreignId('user_id');
             $table->foreign('user_id')
                 ->references('id')

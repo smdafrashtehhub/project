@@ -22,21 +22,15 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name'=>'required|string|max:255',
-            'first_name'=>'required|string|max:255',
-            'last_name'=>'required|string|max:255',
-            'age'=>['required',function($attr,$value,$fail){
-                if($value<18)
-                    $fail($attr.' must be bigger than 18 yo');
-            }],
-            'gender'=>'required',
-            'email'=>'required|email',
-            'phone_number'=>'required',
-            'address'=>'required|string',
-            'postal_code'=>'required',
-            'country'=>'required',
-            'province'=>'required',
-            'city'=>'required',
+//            'user_name'=>'string|max:255',
+            'first_name'=>'string|max:255',
+//            'last_name'=>'string|max:255',
+//            'age'=>[function($attr,$value,$fail){
+//                if($value<18)
+//                    $fail($attr.' must be bigger than 18 yo');
+//            }],
+//            'email'=>'email',
+//            'address'=>'string',
         ];
     }
 }

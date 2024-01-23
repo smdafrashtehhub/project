@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -36,7 +36,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div id="accordionHead">
-                                <form role="form" method="get" action="">
+                                <form role="form" method="get" action="{{route('factors.filter')}}">
                                     <div class="card">
                                         <div class="card-header bg-light">
                                             <a class="btn btn-secondary" data-bs-toggle="collapse" href="#fillters">
@@ -57,21 +57,7 @@
                                                                            value="{{$_GET['filterOrderId']}}"
                                                                         @endif>
                                                             </div>
-                                                            <div class="col">
-                                                                <label for="filterLastName">نام محصول</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="filterLastName"
-                                                                       name="filterLastName"
-                                                                       placeholder="نام محصول "
-                                                                       @if(isset($_GET['filterLastName']))
-                                                                           value="{{$_GET['filterLastName']}}"
-                                                                        @endif>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
 
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -94,7 +80,7 @@
                                                                         <label for="filterOrderTotalPriceMin"
                                                                                id="filterAge">از</label>
                                                                         <input type="number" class="form-control"
-                                                                               id="filterOrderTotalPriceMin" name="filterAgeMin"
+                                                                               id="filterOrderTotalPriceMin" name="filterOrderTotalPriceMin"
                                                                                placeholder="از"
                                                                                @if(isset($_GET['filterOrderTotalPriceMin']))
                                                                                    value="{{$_GET['filterOrderTotalPriceMin']}}"
@@ -111,6 +97,22 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+{{--                                                            <div class="row p-4">--}}
+{{--                                                                <label for="filterProduct"> محصولات--}}
+{{--                                                                </label>--}}
+{{--                                                                <select class="form-control"  name="filterProduct[]"--}}
+{{--                                                                        multiple>--}}
+{{--                                                                    <option value="" selected>محصولات را انتخاب--}}
+{{--                                                                        کنید--}}
+{{--                                                                    </option>--}}
+{{--                                                                    @foreach($products as $product)--}}
+{{--                                                                        <option--}}
+{{--                                                                            value="{{$product->id}}">{{$product->title.' -> '.$product->user->first_name.' '.$product->user->last_name}}</option>--}}
+{{--                                                                    @endforeach--}}
+
+{{--                                                                </select>--}}
+{{--                                                            </div>--}}
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -129,6 +131,7 @@
                                 <thead>
                                 <tr>
                                     <th>شماره سفارش</th>
+                                    <th>نام کاربری</th>
                                     <th>مشتری</th>
                                     <th>عنوان فاکتور</th>
                                     <th>اجناس خریداری شده</th>
@@ -143,6 +146,7 @@
                                 @foreach ($factors as $factor)
                                     <tr>
                                         <td>{{ $factor->order_id }}</td>
+                                        <td>{{ $factor->order->user->user_name }}</td>
                                         <td>{{ $factor->order->user->first_name." ".$factor->order->user->last_name}}</td>
                                         <td>{{ $factor->title }}</td>
                                         <td>
@@ -170,7 +174,6 @@
                                         <td>{{ $factor->description }}</td>
                                         <td>
                                             <form class="" action="{{route('factors.edit',$factor->id)}}" method="get">
-                                            <input type="hidden" name="id" value="{{--{{ $user->id }}--}}">
                                             <button type="submit">
                                                 <i class="fa-regular fa-pen-to-square fa-flip-horizontal"></i>
                                             </button>

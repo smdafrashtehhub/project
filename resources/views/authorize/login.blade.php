@@ -55,6 +55,9 @@
 
             <div class="social-auth-links text-center mb-3">
                 <p>- یا -</p>
+                <a href="{{route('users.github')}}" class="btn btn-block btn-info">
+                    <i class="fa-brands fa-github fa-lg"></i> ورود با اکانت گیت هاب
+                </a>
                 <a href="#" class="btn btn-block btn-primary">
                     <i class="fa-brands fa-facebook fa-lg"></i> ورود با اکانت فیسوبک
                 </a>

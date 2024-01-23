@@ -21,17 +21,33 @@
             <form action="{{route('users.register')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" name="first_name" placeholder="نام و نام خانوادگی">
+                    <input type="text" class="form-control" name="first_name" placeholder="نام">
                     <div class="input-group-append">
                         <span class="fa fa-user input-group-text"></span>
                     </div>
                 </div>
+                @if ($errors->has('first_name'))
+                    <div class="alert alert-danger">{{ $errors->first('first_name') }}</div>
+                @endif
                 <div class="input-group mb-3">
                     <input type="email" name="email" class="form-control" placeholder="ایمیل">
                     <div class="input-group-append">
                         <span class="fa fa-envelope input-group-text"></span>
                     </div>
                 </div>
+                @if ($errors->has('email'))
+                    <div class="alert alert-danger">{{ $errors->first('email') }}</div>
+                @endif
+                <div class="input-group mb-3">
+                    <select class="form-control" name="role" id="role">
+                        <option value="" selected>نقش را وارد کنید</option>
+                        <option value="customer">خریدار</option>
+                        <option value="seller">فروشنده</option>
+                    </select>
+                </div>
+                @if ($errors->has('role'))
+                    <div class="alert alert-danger">{{ $errors->first('role') }}</div>
+                @endif
                 <div class="input-group mb-3">
                     <input type="password" name="password" class="form-control" placeholder="رمز عبور">
                     <div class="input-group-append">
@@ -40,6 +56,9 @@
                         </span>
                     </div>
                 </div>
+                @if ($errors->has('password'))
+                    <div class="alert alert-danger">{{ $errors->first('password') }}</div>
+                @endif
                 <div class="input-group mb-3">
                     <input type="password" name="confirm_password" class="form-control" placeholder="تکرار رمز عبور">
                     <div class="input-group-append">

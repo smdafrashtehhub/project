@@ -41,9 +41,10 @@
                             <select name="order_id" class="form-control" onchange="updateTotalPrice(this)">
                                 @foreach($orders as $order)
                                     <option value="{{ $order->id }}" data-total-price="{{ $order->total_price }}" name_of_user="{{$order->user->first_name." ".$order->user->last_name}}">
-                                        {{ $order->title }}
+                                    {{ $order->title }}
                                     </option>
                                 @endforeach
+                                    <option value="" selected>سفارش را انتخاب کنید</option>
                             </select>
                             <div class="form-group">
                                 <label for="name_user">نام مشتری</label>

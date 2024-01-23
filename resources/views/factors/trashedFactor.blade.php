@@ -28,103 +28,13 @@
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
 
-    @include('header.data.factorsData_header')
+    @include('header.data.factorsDelete_header')
     <!-- Main content -->
         <section class="content">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <div id="accordionHead">
-                                <form role="form" method="get" action="">
-                                    <div class="card">
-                                        <div class="card-header bg-light">
-                                            <a class="btn btn-secondary" data-bs-toggle="collapse" href="#fillters">
-                                                فیلتر ها
-                                            </a>
-                                        </div>
-                                        <div class="collapse" id="fillters" data-bs-parent="#accordionHead">
-                                            <div class="card-body">
-                                                <div class="form-control">
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label for="filterOrderId ">شماره سفارش</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="filterOrderId"
-                                                                       name="filterOrderId" placeholder="شماره سفارش"
-                                                                       @if(isset($_GET['filterOrderId']))
-                                                                       value="{{$_GET['filterOrderId']}}"
-                                                                    @endif>
-                                                            </div>
-                                                            <div class="col">
-                                                                <label for="filterLastName">نام محصول</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="filterLastName"
-                                                                       name="filterLastName"
-                                                                       placeholder="نام محصول "
-                                                                       @if(isset($_GET['filterLastName']))
-                                                                       value="{{$_GET['filterLastName']}}"
-                                                                    @endif>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col">
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="row">
-                                                            <div class="col">
-                                                                <label for="filterUserName">نام کاربری</label>
-                                                                <input type="text" class="form-control"
-                                                                       id="filterUserName"
-                                                                       name="filterUserName"
-                                                                       placeholder="نام کاربری"
-                                                                       @if(isset($_GET['filterUserName']))
-                                                                       value="{{$_GET['filterUserName']}}"
-                                                                    @endif>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="row">
-
-                                                                    <div class="col">
-                                                                        <label for="filterOrderTotalPriceMin">قیمت</label>
-                                                                        <label for="filterOrderTotalPriceMin"
-                                                                               id="filterAge">از</label>
-                                                                        <input type="number" class="form-control"
-                                                                               id="filterOrderTotalPriceMin" name="filterAgeMin"
-                                                                               placeholder="از"
-                                                                               @if(isset($_GET['filterOrderTotalPriceMin']))
-                                                                               value="{{$_GET['filterOrderTotalPriceMin']}}"
-                                                                            @endif>
-                                                                    </div>
-                                                                    <div class="col">
-                                                                        <label for="filterOrderTotalPriceMax">تا</label>
-                                                                        <input type="number" class="form-control"
-                                                                               id="filterOrderTotalPriceMax" name="filterOrderTotalPriceMax"
-                                                                               placeholder="تا"
-                                                                               @if(isset($_GET['filterOrderTotalPriceMax']))
-                                                                               value="{{$_GET['filterOrderTotalPriceMax']}}"
-                                                                            @endif>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <button type="submit" class="btn btn-info">فیلتر</button>
-                                                <a href="">
-                                                    <button type="button" class="btn btn-warning">حذف فیلتر ها</button>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                             <table id="Data" class="table table-bordered table-striped table-hover">
                                 <thead>
                                 <tr>
@@ -136,7 +46,6 @@
                                     <th>نوع فاکتور</th>
                                     <th>توضیحات</th>
                                     <th>بازگردانی</th>
-                                    <th>حذف</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -169,24 +78,15 @@
                                         <td>{{ $trash_factor->type }}</td>
                                         <td>{{ $trash_factor->description }}</td>
                                         <td>
-                                            <form class="" action="{{route('factors.recovery',$trash_factor->id)}}" method="post">
+                                            <form action="{{route('factors.recovery',['id' => $trash_factor->id])}}" method="post">
                                                 @csrf
-                                                @method('put')
-                                                <button type="submit">
+                                                <button type="submit" class="btn btn-info">
                                                     <i class="fa-regular fa-pen-to-square fa-flip-horizontal"></i>
                                                 </button>
 
                                             </form>
                                         </td>
-                                        <td>
-                                            <form class="" action="{{route('factors.trashed',$trash_factor->id)}}" method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" onclick="return confirm('Are you sure?')">
-                                                    <i class="fa-regular fa-trash-can"></i>
-                                                </button>
-                                            </form>
-                                        </td>
+
                                     </tr>
                                 @endforeach
                                 </tbody>
