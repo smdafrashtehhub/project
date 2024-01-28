@@ -5,16 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\LoginRequest;
 use App\Http\Requests\api\RegisterRequest;
+use App\Mail\DemoMail;
 use App\Models\User;
 use http\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+
     //------------------------------------------------- filter --------------------------------------------
     public function filter(Request $request)
     {

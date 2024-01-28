@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use mysql_xdevapi\Collection;
 
 class OrderController extends Controller
@@ -49,6 +52,7 @@ class OrderController extends Controller
 
     public function create(Request $request)
     {
+
         if ($request->user_id == auth('api')->user()->id) {
             $total_price = 0;
             foreach ($request->products as $product) {
@@ -69,6 +73,21 @@ class OrderController extends Controller
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             }
+            $users=array_unique($order->products->pluck('user_id')->toArray());
+            foreach (User::find($users) as $user)
+            {
+                $MailData=[
+                    'title'=>$user->first_name,
+                    'body'=>'email seller'
+                ];
+                if(auth('api')->user()->email != $user->email)
+                Mail::to($user->email)->send(new OrderMail($MailData));
+            }
+            $MailData=[
+                'title'=>auth('api')->user()->first_name,
+                'body'=>'email customer'
+            ];
+            Mail::to(auth('api')->user()->email)->send(new OrderMail($MailData));
             return response()->json([
                 'status' => true,
                 'message' => 'سفارش با موفقیت ثبت شد'

@@ -16,7 +16,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('sendemail', [MailController::class, 'index']);
+Route::get('sendemail', [MailController::class, 'sendemail']);
 
 Route::view('/login', 'authorize.login')->name('login');
 

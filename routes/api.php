@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\FactorController;
+use App\Http\Controllers\Api\MailController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\MailController;
+use App\Http\Controllers\ImageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('sendemail', [MailController::class, 'index']);
+Route::get('/users/sendemail', [MailController::class, 'sendemail']);
 Route::post('/users/store', [UserController::class, 'store']);
 //Route::get('/users/index',[UserController::class,'index'])->middleware('auth:sanctum')->middleware('permission:admin');
 Route::get('/users/index', [UserController::class, 'index'])->middleware('auth:sanctum')->middleware('permission:User_index');
@@ -62,3 +63,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/factors/{factor}/update', [FactorController::class, 'update'])->middleware('role:admin');
     Route::post('/factors/filter', [FactorController::class, 'filter'])->middleware('role:admin|seller|customer');
 });
+
+
+Route::post('/images/create', [ImageController::class, 'create']);

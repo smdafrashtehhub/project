@@ -35,6 +35,7 @@ class ProductController extends Controller
     //------------------------------------------------- create --------------------------------------------
     public function create(Request $request)
     {
+
         Product::create([
             'title' => $request->product_name,
             'price' => $request->price,
