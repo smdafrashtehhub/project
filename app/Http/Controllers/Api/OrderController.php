@@ -65,11 +65,11 @@ class OrderController extends Controller
                 'total_price' => $total_price,
                 'explanations' => $request->explanations,
             ]);
+            dd('ok');
             foreach ($request->products as $product) {
                 Product::find($product['id'])->orders()->attach($order, [
                     'count' => $product['count'],
                 ]);
-                dd('ok');
                 Product::where('id', $product['id'])->update([
                     'inventory' => (Product::find($product['id'])->inventory) - ($product['count']),
                     'updated_at' => date('Y-m-d H:i:s'),
