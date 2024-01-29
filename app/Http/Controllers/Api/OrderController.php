@@ -65,7 +65,6 @@ class OrderController extends Controller
                 'total_price' => $total_price,
                 'explanations' => $request->explanations,
             ]);
-            dd('ok');
             foreach ($request->products as $product) {
                 Product::find($product['id'])->orders()->attach($order, [
                     'count' => $product['count'],
