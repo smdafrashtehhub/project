@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\FactorController;
 use App\Http\Controllers\Api\MailController;
+use App\Http\Controllers\Api\SendEmail as SendEmail;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
@@ -23,6 +24,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/users/send_email', [SendEmail::class, 'sendemail']);
 Route::get('/users/sendemail', [MailController::class, 'sendemail']);
 Route::post('/users/store', [UserController::class, 'store']);
 //Route::get('/users/index',[UserController::class,'index'])->middleware('auth:sanctum')->middleware('permission:admin');

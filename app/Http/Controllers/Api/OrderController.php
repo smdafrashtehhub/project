@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use mysql_xdevapi\Collection;
+use App\Http\Controllers\Api\SendEmail;
 
 class OrderController extends Controller
 {
@@ -73,21 +74,8 @@ class OrderController extends Controller
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             }
-            $users=array_unique($order->products->pluck('user_id')->toArray());
-            foreach (User::find($users) as $user)
-            {
-                $MailData=[
-                    'title'=>$user->first_name,
-                    'body'=>'email seller'
-                ];
-                if(auth('api')->user()->email != $user->email)
-                Mail::to($user->email)->send(new OrderMail($MailData));
-            }
-            $MailData=[
-                'title'=>auth('api')->user()->first_name,
-                'body'=>'email customer'
-            ];
-            Mail::to(auth('api')->user()->email)->send(new OrderMail($MailData));
+            $mail=new SendEmail($order);
+            $mail->sendemail();
             return response()->json([
                 'status' => true,
                 'message' => 'سفارش با موفقیت ثبت شد'
