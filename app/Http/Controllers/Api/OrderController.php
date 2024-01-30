@@ -83,7 +83,7 @@ class OrderController extends Controller
         }
         return response()->json([
             'status' => false,
-            'message' => 'شما نمیتوانید  برای این کاربر شفارش ایجاد کنید'
+            'message' => 'شما نمیتوانید  برای این کاربر سفارش ایجاد کنید'
         ]);
     }
 

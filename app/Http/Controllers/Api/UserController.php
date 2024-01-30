@@ -156,6 +156,7 @@ class UserController extends Controller
                     'status' => 'Awaiting confirmation',
                     'password' => Hash::make($request->password),
                 ]);
+                $user->assignRole('seller');
             } else {
                 $user = User::create([
                     'first_name' => $request->first_name,
@@ -163,8 +164,11 @@ class UserController extends Controller
                     'role' => $request->role,
                     'password' => Hash::make($request->password),
                 ]);
+                if ($request->role == 'admin')
+                    $user->assignRole('admin');
+                if ($request->role == 'customer')
+                    $user->assignRole('customer');
             }
-            $user->assignRole('customer');
 //            $user->givePermissionTo
             return response()->json([
                 'status' => true,
