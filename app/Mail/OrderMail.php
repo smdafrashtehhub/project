@@ -50,7 +50,7 @@ class OrderMail extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromPath(public_path('/image/users/425841877ca8f16.jpg')),
+            Attachment::fromPath(storage_path('/app/public/1/git-push-to-remote-branch-article.jpg')),
         ];
     }
 }
