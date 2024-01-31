@@ -74,8 +74,10 @@ class OrderController extends Controller
                     'updated_at' => date('Y-m-d H:i:s'),
                 ]);
             }
+
             $mail=new SendEmail($order);
             $mail->sendemail();
+
             return response()->json([
                 'status' => true,
                 'message' => 'سفارش با موفقیت ثبت شد'

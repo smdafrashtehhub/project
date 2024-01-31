@@ -28,7 +28,7 @@ class OrderMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Order Mail',
+            subject: 'samad Mail',
         );
     }
 
