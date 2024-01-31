@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\CreateOrder;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMail;
 use App\Models\Order;
@@ -75,8 +76,10 @@ class OrderController extends Controller
                 ]);
             }
 
-            $mail=new SendEmail($order);
-            $mail->sendemail();
+//            $mail=new SendEmail($order);
+//            $mail->sendemail();
+
+            event(new CreateOrder($order));
 
             return response()->json([
                 'status' => true,
