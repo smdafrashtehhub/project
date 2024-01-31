@@ -29,14 +29,14 @@ class CreateOrderEmail
         {
             $MailData=[
                 'title'=>$user->first_name,
-                'body'=>'email seller event'
+                'body'=>'email seller listener'
             ];
             if(auth('api')->user()->email != $user->email)
                 Mail::to($user->email)->send(new OrderMail($MailData));
         }
         $MailData=[
             'title'=>auth('api')->user()->first_name,
-            'body'=>'email customer event'
+            'body'=>'email customer listener'
         ];
         Mail::to(auth('api')->user()->email)->send(new OrderMail($MailData));
 
