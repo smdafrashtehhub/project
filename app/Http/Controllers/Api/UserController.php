@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -118,6 +119,11 @@ class UserController extends Controller
     //------------------------------------------------- login --------------------------------------------
     public function login(LoginRequest $request)
     {
+        activity()
+            ->causedBy(User::find(1))
+            ->on(User::find(1))
+            ->log('Look mum, I logged something');
+
         try {
             if (!Auth::guard('web')->attempt($request->only('email', 'password'))) {
                 return response()->json([
@@ -155,6 +161,8 @@ class UserController extends Controller
                     'role' => $request->role,
                     'status' => 'Awaiting confirmation',
                     'password' => Hash::make($request->password),
+                    'lan'=>$request->lan,
+                    'long'=>$request->long,
                 ]);
                 $user->assignRole('seller');
             } else {
@@ -163,6 +171,8 @@ class UserController extends Controller
                     'email' => $request->email,
                     'role' => $request->role,
                     'password' => Hash::make($request->password),
+                    'lan'=>$request->lan,
+                    'long'=>$request->long,
                 ]);
                 if ($request->role == 'admin')
                     $user->assignRole('admin');
@@ -205,6 +215,7 @@ class UserController extends Controller
     //------------------------------------------------- index --------------------------------------------
     public function index()
     {
+        dd(Activity::all()->last()->causer);
         try {
             return User::all();
         } catch (\throwable $th) {
