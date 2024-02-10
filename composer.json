@@ -13,6 +13,8 @@
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
+        "melipayamak/laravel": "1.0.0",
+        "melipayamak/php": "1.0.0",
         "spatie/laravel-activitylog": "^4.7",
         "spatie/laravel-medialibrary": "10.9.0",
         "spatie/laravel-permission": "^6.3",

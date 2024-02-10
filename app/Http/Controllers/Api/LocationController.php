@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+
 class LocationController extends Controller
 {
     //--------------------------------------------1way------------------------------------------
@@ -75,7 +76,8 @@ class LocationController extends Controller
 
             $first = $last;
 
-        }
+        }//------------------end of foreach--------------------
+
         $order->update([
             'price_km' => ($sum / 3280) * User::find(5)->price_per_km,
             'total_price' => $order->total_price + ($sum / 3280) * User::find(5)->price_per_km

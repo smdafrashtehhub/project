@@ -215,7 +215,7 @@ class UserController extends Controller
     //------------------------------------------------- index --------------------------------------------
     public function index()
     {
-        dd(Activity::all()->last()->causer);
+//        dd(Activity::all()->last()->causer);
         try {
             return User::all();
         } catch (\throwable $th) {

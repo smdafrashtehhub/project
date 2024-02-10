@@ -10,7 +10,6 @@
 <body>
 <h1>{{$mailData['title']}}</h1>
 <p>{{$mailData['body']}}</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque commodi eaque iste modi odit possimus sint
-    vel veritatis voluptas! Adipisci at culpa hic maiores quis tempore voluptate. Deserunt, officia!</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur aut cupiditate, dolores ducimus enim error, eveniet excepturi explicabo id necessitatibus nisi nostrum odio placeat quas quia quidem repudiandae, rerum similique?</p>
 </body>
 </html>

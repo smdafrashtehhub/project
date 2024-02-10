@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\SmsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -72,3 +73,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 Route::post('/images/create', [ImageController::class, 'create']);
+Route::get('/sendsms', [SmsController::class, 'sendsms']);
