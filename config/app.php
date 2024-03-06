@@ -171,7 +171,8 @@ return [
         App\Providers\FortifyServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Melipayamak\Laravel\ServiceProvider::class,
-    ])->toArray(),
+        MongoDB\Laravel\MongoDBServiceProvider::class,
+        ])->toArray(),
 
     /*
     |--------------------------------------------------------------------------
@@ -187,6 +188,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
         Melipayamak\Laravel\Facade::class,
+        'Redis'=>Illuminate\Support\Facades\Redis::class,
     ])->toArray(),
 
 ];

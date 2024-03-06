@@ -3,12 +3,13 @@
 use App\Http\Controllers\Api\FactorController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MailController;
-use App\Http\Controllers\Api\SendEmail as SendEmail;
+use App\Http\Controllers\Api\MongoController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\SendEmail as SendEmail;
+use App\Http\Controllers\Api\SmsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\ImageController;
-use App\Http\Controllers\SmsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/location/{order}',[LocationController::class,'location']);
+Route::post('/location/{order}', [LocationController::class, 'location']);
 
 Route::get('/users/send_email', [SendEmail::class, 'sendemail']);
 Route::get('/users/sendemail', [MailController::class, 'sendemail']);
@@ -74,3 +75,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/images/create', [ImageController::class, 'create']);
 Route::get('/sendsms', [SmsController::class, 'sendsms']);
+Route::post('/codeConfirmation/{user}', [SmsController::class, 'codeConfirmation'])->middleware('throttle:5,1');
+Route::get('/sendCode/{user}', [SmsController::class, 'sendCode'])->middleware('throttle:1,1');
+
+
+Route::post('/test', [\App\Http\Controllers\Api\TestController::class, 'index']);
+
+Route::prefix('mongodb')->controller(MongoController::class)->group(function () {
+    Route::post('create', 'create');
+    Route::get('index', 'index');
+    Route::get('show/{mongo}', 'show');
+    Route::delete('delete/{mongo}', 'delete');
+    Route::post('update/{mongo}', 'update');
+});
+

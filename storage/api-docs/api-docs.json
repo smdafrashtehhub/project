@@ -1,0 +1,208 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "test",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/test": {
+            "post": {
+                "tags": [
+                    "home"
+                ],
+                "summary": "home page",
+                "description": "fdafadf",
+                "operationId": "Register",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "text"
+                                    },
+                                    "email": {
+                                        "type": "text"
+                                    },
+                                    "family": {
+                                        "type": "text"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Register Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Register Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        },
+        "/api/users/register": {
+            "post": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "user login",
+                "description": "enter data of user for ",
+                "operationId": "samad",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "user_name": {
+                                        "type": "varchar"
+                                    },
+                                    "first_name": {
+                                        "type": "varchar"
+                                    },
+                                    "last_name": {
+                                        "type": "varchar"
+                                    },
+                                    "age": {
+                                        "type": "integer"
+                                    },
+                                    "phone_number": {
+                                        "type": "bigint"
+                                    },
+                                    "address": {
+                                        "type": "text"
+                                    },
+                                    "postal_code": {
+                                        "type": "varchar"
+                                    },
+                                    "country": {
+                                        "type": "varchar"
+                                    },
+                                    "province": {
+                                        "type": "varchar"
+                                    },
+                                    "city": {
+                                        "type": "varchar"
+                                    },
+                                    "gender": {
+                                        "type": "enum"
+                                    },
+                                    "email": {
+                                        "type": "varchar"
+                                    },
+                                    "role": {
+                                        "type": "enum"
+                                    },
+                                    "status": {
+                                        "type": "enum"
+                                    },
+                                    "lan": {
+                                        "type": "varchar"
+                                    },
+                                    "long": {
+                                        "type": "varchar"
+                                    },
+                                    "price_per_km": {
+                                        "type": "bigint"
+                                    },
+                                    "code_confirmation": {
+                                        "type": "enum"
+                                    },
+                                    "password": {
+                                        "type": "password"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Register Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "Register Successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "404": {
+                        "description": "Resource Not Found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "bearerAuth",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

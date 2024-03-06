@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 use App\Events\CreateOrder;
+use App\Events\SendSmsEvent;
+use App\Events\SendSmsRegisterEvent;
 use App\Listeners\CreateOrderEmail;
+use App\Listeners\SendSmsListener;
+use App\Listeners\SendSmsRegisterListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -22,6 +26,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         CreateOrder::class=>[
             CreateOrderEmail::class,
+        ],
+        SendSmsEvent::class=>[
+            SendSmsListener::class,
+        ],
+        SendSmsRegisterEvent::class=>[
+            SendSmsRegisterListener::class,
         ],
     ];
 

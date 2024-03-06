@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\SendSmsRegisterEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\api\LoginRequest;
 use App\Http\Requests\api\RegisterRequest;
@@ -18,7 +19,6 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-
 
     //------------------------------------------------- filter --------------------------------------------
     public function filter(Request $request)
@@ -119,12 +119,20 @@ class UserController extends Controller
     //------------------------------------------------- login --------------------------------------------
     public function login(LoginRequest $request)
     {
-        activity()
-            ->causedBy(User::find(1))
-            ->on(User::find(1))
-            ->log('Look mum, I logged something');
+//        activity()
+//            ->causedBy(User::find(1))
+//            ->on(User::find(1))
+//            ->log('Look mum, I logged something');
 
         try {
+            $user = User::where('email', $request->email)->first();
+            if($user->code_confirmation == 'waiting')
+            {
+                return response()->json([
+                    'status'=>false,
+                    'message'=>"$user->first_name عزیز هنوز تاییدیه اکانت را نگرفته اید.لطفا کد تاییدیه را وارد کنید"
+                ]);
+            }
             if (!Auth::guard('web')->attempt($request->only('email', 'password'))) {
                 return response()->json([
                     'status' => false,
@@ -132,7 +140,6 @@ class UserController extends Controller
                 ], 401);
             }
 
-            $user = User::where('email', $request->email)->first();
 
             $token = $user->createToken('API TOKEN')->plainTextToken;
             return response()->json([
@@ -150,9 +157,71 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @OA\Post(
+     * path="/api/users/register",
+     * operationId="RegisterUser",
+     * tags={"user"},
+     * summary="user login",
+     * description="enter data of user for ",
+     *
+     *     @OA\RequestBody(
+     *     required=true,
+     *         @OA\JsonContent(),
+     *         @OA\MediaType(
+     *            mediaType="multipart/form-data",
+     *            @OA\Schema(
+     *               type="object",
+     *
+     *               @OA\Property(property="user_name", type="varchar"),
+     *               @OA\Property(property="first_name", type="varchar"),
+     *               @OA\Property(property="last_name", type="varchar"),
+     *               @OA\Property(property="age", type="int"),
+     *               @OA\Property(property="phone_number", type="bigint"),
+     *               @OA\Property(property="address", type="text"),
+     *               @OA\Property(property="postal_code", type="varchar"),
+     *               @OA\Property(property="country", type="varchar"),
+     *               @OA\Property(property="province", type="varchar"),
+     *               @OA\Property(property="city", type="varchar"),
+     *               @OA\Property(property="gender", type="enum"),
+     *               @OA\Property(property="email", type="varchar"),
+     *               @OA\Property(property="role", type="enum"),
+     *               @OA\Property(property="status", type="enum"),
+     *               @OA\Property(property="lan", type="varchar"),
+     *               @OA\Property(property="long", type="varchar"),
+     *               @OA\Property(property="price_per_km", type="bigint"),
+     *               @OA\Property(property="code_confirmation", type="enum"),
+     *               @OA\Property(property="password", type="password"),
+     *               @OA\Property(property="password_confirmation", type="password")
+     *            ),
+     *        ),
+     *    ),
+     *      @OA\Response(
+     *          response=201,
+     *          description="Register Successfully",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Register Successfully",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable Entity",
+     *          @OA\JsonContent()
+     *       ),
+     *      @OA\Response(response=400, description="Bad request"),
+     *      @OA\Response(response=404, description="Resource Not Found"),
+     * )
+     */
+
     //------------------------------------------------- register --------------------------------------------
     public function register(RegisterRequest $request)
     {
+//        config(['globals.flag'=>0]);
+//        dd(config('globals.flag'));
+
         try {
             if ($request->role == 'seller') {
                 $user = User::create([
@@ -163,6 +232,7 @@ class UserController extends Controller
                     'password' => Hash::make($request->password),
                     'lan'=>$request->lan,
                     'long'=>$request->long,
+                    'phone_number'=>$request->phone_number,
                 ]);
                 $user->assignRole('seller');
             } else {
@@ -173,12 +243,15 @@ class UserController extends Controller
                     'password' => Hash::make($request->password),
                     'lan'=>$request->lan,
                     'long'=>$request->long,
+                    'phone_number'=>$request->phone_number,
+
                 ]);
                 if ($request->role == 'admin')
                     $user->assignRole('admin');
                 if ($request->role == 'customer')
                     $user->assignRole('customer');
             }
+            event(new SendSmsRegisterEvent($user));
 //            $user->givePermissionTo
             return response()->json([
                 'status' => true,

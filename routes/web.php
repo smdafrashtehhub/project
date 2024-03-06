@@ -9,12 +9,20 @@ use App\Models\Factor;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
+Route::get('/user-exists', function () {
+     $userExists = Artisan::call('sms:command', [
+        'email' => 'papa@example.com'
+    ]);
+});
+
+Route::get('mongodb',[\App\Http\Controllers\MongoDbController::class,'mongodb']);
 
 Route::get('sendemail', [MailController::class, 'sendemail']);
 

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Image;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -50,8 +51,12 @@ class OrderMail extends Mailable
      */
     public function attachments(): array
     {
-        return [
-            Attachment::fromPath(storage_path('/app/public/'.Media::all()->count().'/'.Media::latest()->first()->file_name)),
-        ];
+        $attachments=[];
+        foreach (Media::where('model_id',Image::orderBy('id','desc')->first()->id)->get() as $media)
+        {
+            $attachments[]=Attachment::fromPath(storage_path('/app/public/'.$media->id.'/'.$media->file_name));
+        }
+
+        return $attachments;
     }
 }

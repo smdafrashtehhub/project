@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\CreateOrder;
+use App\Events\SendSmsEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMail;
 use App\Models\Order;
@@ -78,9 +79,11 @@ class OrderController extends Controller
 
 //            $mail=new SendEmail($order);
 //            $mail->sendemail();
-
 //            event(new CreateOrder($order));
+
             CreateOrder::dispatch($order);
+            event(new SendSmsEvent($order));
+
             return response()->json([
                 'status' => true,
                 'message' => 'سفارش با موفقیت ثبت شد'

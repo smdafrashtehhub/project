@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendSms;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -36,13 +38,17 @@ class ProductController extends Controller
     public function create(Request $request)
     {
 
-        Product::create([
+        $product=Product::create([
             'title' => $request->product_name,
             'price' => $request->price,
             'inventory' => $request->amount_available,
             'description' => $request->explanation,
             'user_id' => auth('api')->user()->id,
         ]);
+        $admins=User::where('role','admin')->get();
+        foreach ($admins as $admin) {
+            SendSms::dispatch($product,$admin);
+        }
         return response()->json([
             'status' => true,
             'message' => 'محصول با موفقیت ساخته شد'
